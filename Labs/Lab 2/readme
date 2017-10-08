@@ -1,0 +1,13 @@
+Student Information
+####################
+Alexander Montague
+0959687
+amontagu@uoguelph.ca
+
+Program Description
+####################
+This program makes use of accessor and mutator functions to create a store for two different types of products.
+
+Additional Program  Details
+####################
+This program made use of the Book header and source files, as well as user added boardgame and Store files. This program displays one item at a time in the store through the main use of void pointers and function pointers. 

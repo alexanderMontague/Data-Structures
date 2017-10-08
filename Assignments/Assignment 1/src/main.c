@@ -15,9 +15,9 @@ int main (int argc, char **argv)
 	Car tempCarStruct;				// Holds car data temporarily to put into struct array
 	Car* carArray = NULL; 		    // Hold all car structs in here
 
-	Node* nodeArray = NULL;		  // Node array to hold all list nodes
+	Node** nodeArray = NULL;		// Node array to hold all list nodes
 
-	List* carListNorth = NULL;	  // Lists to hold car nodes for each direction
+	List* carListNorth = NULL;	    // Lists to hold car nodes for each direction
 	List* carListEast = NULL;
 	List* carListSouth = NULL;
 	List* carListWest = NULL;
@@ -69,10 +69,10 @@ int main (int argc, char **argv)
 				tempCarStruct.turnDirection = tempTurnDirection;
 				tempCarStruct.arrivalTime = tempArrivalTime;
 
-				carArray = realloc(carArray, sizeof(Car) * carCount);
+				carArray = realloc(carArray, sizeof(Car) * carCount);		// Allocating memory for struct array and putting information in
 				carArray[carCount - 1] = tempCarStruct;
 
-				printf("Direction:%c  Turn Direction:%c  Duration:%d\n", carArray[carCount - 1].direction, carArray[carCount - 1].turnDirection, carArray[carCount - 1].arrivalTime);
+				//printf("Direction:%c  Turn Direction:%c  Duration:%d\n", carArray[carCount - 1].direction, carArray[carCount - 1].turnDirection, carArray[carCount - 1].arrivalTime);
 
 			}
 			fclose(carInputFP);
@@ -80,9 +80,29 @@ int main (int argc, char **argv)
 			// TEST
 			// printf("\n\n TESTING\n");
 			// printNode(&carArray[6]);
-			// printf("Return = %d\n", compare(&carArray[0], &carArray[1]));
+			//printf("Return = %d\n", compare(&carArray[1], &carArray[0]));
 
 			carListNorth = initializeList(&printNode, &deleteListNode, &compare);
+			carListEast = initializeList(&printNode, &deleteListNode, &compare);
+			carListSouth = initializeList(&printNode, &deleteListNode, &compare);
+			carListWest = initializeList(&printNode, &deleteListNode, &compare);
+
+			nodeArray = malloc(sizeof(Node) * carCount);
+
+			for(int i = 0; i < carCount; i++) {
+				nodeArray[i] = initializeNode((void*)&carArray[i]);
+			}
+
+			//printNode(&nodeArray[7]->data);			// How to send nodes to functions
+			//printf("Return = %d\n", compare(&nodeArray[1]->data, &nodeArray[3]->data));
+			insertFront(carListNorth, &nodeArray[0]);
+			insertFront(carListNorth, &nodeArray[1]);
+			insertFront(carListNorth, &nodeArray[2]);
+
+			printForward(carListNorth);
+
+
+			//DONT FORGET TO FREE
 		}
 	}
 

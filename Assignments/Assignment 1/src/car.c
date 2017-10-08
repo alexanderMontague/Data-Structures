@@ -28,9 +28,8 @@ void printNode(void *toBePrinted) {
 
 void deleteListNode(void *toBeDeleted) {
 	
-	Car* c = (Car*)toBeDeleted;
-	c = NULL;
-	free(c);
+	toBeDeleted = NULL;
+	free(toBeDeleted);
 
 }
 

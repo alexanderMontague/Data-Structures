@@ -10,6 +10,8 @@ void printNode(void *toBePrinted) {
 
 	Car* c = (Car*)toBePrinted;
 
+	// In main include HEADER text
+
 	if(c->turnDirection == 'R') {
 		if(c->arrivalTime >= 10) {
 			printf("%c %c %d   %d   %d\n", c->direction, c->turnDirection, c->arrivalTime, c->arrivalTime, (c->arrivalTime + 1));

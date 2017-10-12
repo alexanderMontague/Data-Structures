@@ -120,7 +120,7 @@ void insertSorted(List *list, void *toBeAdded) {
 	Node* beforeNode = NULL;
 	int returnVal = 0;
 	bool inList = false;
-	
+
 	if(list->head == NULL) {
 		insertFront(list, toAddNode->data);
 	}
@@ -152,7 +152,6 @@ void insertSorted(List *list, void *toBeAdded) {
 
 
 int deleteNodeFromList(List *list, void *toBeDeleted) {
-	
 	Node* deleteNode = initializeNode(toBeDeleted);
 	Node* findDeleted = list->head;
 	Node* tempNode = NULL;
@@ -160,12 +159,13 @@ int deleteNodeFromList(List *list, void *toBeDeleted) {
 	Node* tempNode3 = NULL;
 	Car* deleteCar = deleteNode->data;
 	Car* findDeleteCar = findDeleted->data;
+	bool inDel = false;
 
 	if(findDeleted == NULL) {
 		return EXIT_FAILURE;
 	}
-	else if(deleteNode == NULL) {
-		return -1;
+	if(findDeleted->next == NULL && findDeleted->previous == NULL) {
+		return 69;
 	}
 	while(findDeleted->next != NULL) {
 		if(deleteCar->direction == findDeleteCar->direction && deleteCar->turnDirection == findDeleteCar->turnDirection && deleteCar->arrivalTime == findDeleteCar->arrivalTime) {
@@ -173,6 +173,7 @@ int deleteNodeFromList(List *list, void *toBeDeleted) {
 				tempNode = findDeleted->next;
 				list->head = tempNode;
 				list->deleteNode(tempNode);
+				inDel = true;
 			}
 			else {									// If node is in middle of list
 				tempNode = findDeleted;
@@ -182,6 +183,7 @@ int deleteNodeFromList(List *list, void *toBeDeleted) {
 				tempNode2->next = tempNode3;
 				tempNode3->previous = tempNode2;
 				list->deleteNode(tempNode);
+				inDel = true;
 			}
 		}
 		findDeleted = findDeleted->next;
@@ -193,6 +195,10 @@ int deleteNodeFromList(List *list, void *toBeDeleted) {
 		tempNode2->next = NULL;
 		list->tail = tempNode2;
 		list->deleteNode(tempNode);
+		inDel = true;
+	}
+	else if(inDel == false) {
+		return -1;
 	}
 	
 	return EXIT_SUCCESS;

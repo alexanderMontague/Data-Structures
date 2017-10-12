@@ -6,12 +6,17 @@ amontagu@uoguelph.ca
 
 Program Description
 ####################
-This program creates linked lists for integer and book types. The program also includes functionality in the API, that lets you access and mutate the linked list.
+This program was supposedly created to test the functionality, and usability of a doubly linked list. This program uses a doubly linked list to simulate traffic.
 
 Additional Program  Details
 ####################
-1) Some benefits of testing with multiple data types are that it allows you to check that everything works the way it should, no matter the data type. If you only test with one data type, you might not be sure if another data type will break your program, or cause unwanted output. 
 
-2) I believe that the signature of the print function does not need to be changed to test the functionality of the method, as a void pointer being the only parameter, and there being no return function suffices. The only thing that changes from my print functions is how the void pointer is processed. You have to print a book and integer differently 
+Just to preface this assignment, I really did not understand the simulation part of the program at all, thus my output is probably not correct. I tried my best and will hopefully get some part marks for the output style and such, but I really had no clue as to how the simulation portion works. I hope in the future the assignments are verified in the assignment specifications and not conveyed through the discussion boards. I am not blaming anyone, but I, along with what I assume are multiple others, would really benefit from a better and clear to the point explanation of the assignment. Thanks for your time.
 
-3) No, this function does not remove the first element. This function only retrieves the element and does not delete it. I tested this by printing the list, calling the getFromFront function, and then printing the list again after. The results showed that no elements were deleted from the list, much less the first element. This function does not delete any elements, whereas the deleteNodeFromList function does. 
+1) I included the insert sort function, and it is fully functional. Please test it as I need the bonus marks.
+
+2) Place the input files in the /assets/ folder. Run the program by make, then running   ./program <filename.txt>      I have configured it so you do not need to type a path or anything.
+
+3) In my deleteNodeFromList function in APIfunctions.c, I included the “car.h” file as I needed it for this function. To my knowledge and extensive googling, there is no direct way to compare structs or unions in C. The only way is to compare each member individually, which I do here. deleteNode->data == findDeleted->data does not work. I have tried. Hopefully I do not lose too many marks for this, but I did not know of another way.
+
+4) Please test the linked list extensively, as it is the only thing that works as of now. I had no idea how to do the simulation. Linked list is tested in testMain.c

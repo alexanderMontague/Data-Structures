@@ -114,90 +114,292 @@ int main (int argc, char **argv)
 
 
 			bool firstPrintInfo = true;
-			double simulationTimer = 1.0;
-			double lightTimer = 0;
-			double interArrivalTime = 0;
+			bool listEmpty = false;
+			bool northEmpty = false;
+			bool eastEmpty = false;
+			bool southEmpty = false;
+			bool westEmpty = false;
 			int lightDirection = 0; // North = 0, East = 1, South = 2, West = 3
-			Node* currNode = NULL;
-			Node* tempNode = NULL;
+			int simulationTimer = 1;
+			int errorVal = 0;
+			double lightTimer = 0;		// Real time for each direction (14s)
+			double tempTimer = 0;		// Fake timer corresponds to lightTimer
+			//double interArrivalTime = 0;
+			
+			//Node* currNode = NULL;
+			//Node* tempNode = NULL;
 			Car* currCar = NULL;
 
 
-			while(1) {
-
+			while(northEmpty == false && eastEmpty == false && southEmpty == false && westEmpty == false) {
 				if(carListNorth->head == NULL && carListEast->head == NULL && carListSouth->head == NULL && carListWest->head == NULL) {
-					printf("All lists are empty. Exiting.\n");
 					break;
 				}
 
-				if(lightDirection == 0) {			// NORTH
-					currNode = carListNorth->head;
-					tempNode = carListNorth->head;
-					
-					currCar = currNode->data;
-					
-					lightTimer = 1;
+				if(lightDirection == 0) {									// NORTH
 
-					while(lightTimer <= 14) {
+					listEmpty = false;
+					lightTimer = simulationTimer;
+					tempTimer = tempTimer + simulationTimer;
+					errorVal = 0;
+					if(carListNorth->head == NULL) {
+							listEmpty = true;
+							northEmpty = true;
+					}
+					else {
+						currCar = getFromFront(carListNorth);
+					}
 
+					while(lightTimer <= simulationTimer + 10 && listEmpty == false) {
 						if(currCar->arrivalTime == lightTimer) {
-							if(currCar->turnDirection == 'F' && lightTimer + 2 <= 14) {
-								interArrivalTime = lightTimer;
-								lightTimer = lightTimer + 2;
-								simulationTimer = simulationTimer + 2;
-								vehicleInfoPrint(currCar, firstPrintInfo, interArrivalTime, 2);
-								deleteNodeFromList(carListNorth, currCar);
-								if(currNode->next != NULL) {
-									currNode = currNode->next;
-									currCar = currNode->data;
-								}
+							if(currCar->turnDirection == 'R') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime, 1);
+								errorVal = deleteNodeFromList(carListNorth, currCar);
+								tempTimer = tempTimer + 1;
 								firstPrintInfo = false;
 							}
-							else if(currCar->turnDirection == 'L' && lightTimer + 2.5 <= 14) {
-								interArrivalTime = lightTimer;
-								lightTimer = lightTimer + 2.5;
-								simulationTimer = simulationTimer + 2.5;
-								vehicleInfoPrint(currCar, firstPrintInfo, interArrivalTime, 2.5);
-								deleteNodeFromList(carListNorth, currCar);
-								if(currNode->next != NULL) {
-									currNode = currNode->next;
-									currCar = currNode->data;
-								}
+							else if(currCar->turnDirection == 'F') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime, 2);
+								errorVal = deleteNodeFromList(carListNorth, currCar);
+								tempTimer = tempTimer + 2;
 								firstPrintInfo = false;
 							}
-							else if(currCar->turnDirection == 'R' && lightTimer + 1 <= 14) {
-								interArrivalTime = lightTimer;
-								lightTimer = lightTimer + 1;
-								simulationTimer = simulationTimer + 1;
-								vehicleInfoPrint(currCar, firstPrintInfo, interArrivalTime, 1);
-								deleteNodeFromList(carListNorth, currCar);
-								if(currNode->next != NULL) {
-									currNode = currNode->next;
-									currCar = currNode->data;
-								}
+							else if(currCar->turnDirection == 'L') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime, 2.5);
+								errorVal = deleteNodeFromList(carListNorth, currCar);
+								tempTimer = tempTimer + 2.5;
 								firstPrintInfo = false;
 							}
 						}
-						lightTimer = lightTimer + 0.5;
+						
+						if(errorVal == 69) {
+							listEmpty = true;
+							northEmpty = true;
+						}
+						else if(tempTimer <= simulationTimer + 10) {
+							currCar = getFromFront(carListNorth);
+						}
+						else {
+							//break;
+						}
+
+						lightTimer = lightTimer + 1;
 
 					}
+					if(lightTimer > simulationTimer + 10 && lightTimer <= simulationTimer + 14) {		// YELLOW
+						
+						if(currCar->turnDirection == 'L' && (2.5 + lightTimer <= (simulationTimer + 14))) {
+							vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime, 2.5);
+							errorVal = deleteNodeFromList(carListNorth, currCar);
+							tempTimer = tempTimer + 2.5;
+							firstPrintInfo = false;
+						}
+						tempTimer = tempTimer + 2.5;
+					}
+
+					simulationTimer = simulationTimer + 14;
+					lightDirection++;
+
+				}
+				if(lightDirection == 1) {		// EAST
+					
+					listEmpty = false;
+					lightTimer = simulationTimer;
+					tempTimer = tempTimer + simulationTimer;
+					errorVal = 0;
+					if(carListEast->head == NULL) {
+							listEmpty = true;
+							eastEmpty = true;
+					}
+					else {
+						currCar = getFromFront(carListEast);
+					}
+
+
+					while(lightTimer <= simulationTimer + 10 && listEmpty == false) {
+						if(currCar->arrivalTime == lightTimer) {
+							if(currCar->turnDirection == 'R') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 1);
+								errorVal = deleteNodeFromList(carListEast, currCar);
+								tempTimer = tempTimer + 1;
+								firstPrintInfo = false;
+							}
+							else if(currCar->turnDirection == 'F') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2);
+								errorVal = deleteNodeFromList(carListEast, currCar);
+								tempTimer = tempTimer + 2;
+								firstPrintInfo = false;
+							}
+							else if(currCar->turnDirection == 'L') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2.5);
+								errorVal = deleteNodeFromList(carListEast, currCar);
+								tempTimer = tempTimer + 2.5;
+								firstPrintInfo = false;
+							}
+						}
+
+						if(errorVal == 69) {
+							listEmpty = true;
+							eastEmpty = true;
+						}
+						else if(tempTimer <= simulationTimer + 10) {
+							currCar = getFromFront(carListEast);
+						}
+						else {
+							//break;
+						}
+
+						lightTimer = lightTimer + 1;
+
+					}
+					if(lightTimer > simulationTimer + 10 && lightTimer <= simulationTimer + 14) {		// YELLOW
+						
+						if(currCar->turnDirection == 'L' && (2.5 + lightTimer <= (simulationTimer + 14))) {
+							vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2.5);
+							errorVal = deleteNodeFromList(carListEast, currCar);
+							tempTimer = tempTimer + 2.5;
+							firstPrintInfo = false;
+						}
+						tempTimer = tempTimer + 2.5;
+					}
+					
+					simulationTimer = simulationTimer + 14;
 					lightDirection++;
 				}
-				else if(lightDirection == 1) {		// EAST
-				
+				if(lightDirection == 2) {		// SOUTH
+					listEmpty = false;
+					lightTimer = simulationTimer;
+					tempTimer = tempTimer + simulationTimer;
+					errorVal = 0;
+					if(carListSouth->head == NULL) {
+						listEmpty = true;
+						southEmpty = true;
+					}
+					else {
+						currCar = getFromFront(carListSouth);
+					}
+
+					while(lightTimer <= simulationTimer + 50 && listEmpty == false) {
+						if(currCar->arrivalTime == lightTimer) {
+							if(currCar->turnDirection == 'R') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 1);
+								errorVal = deleteNodeFromList(carListSouth, currCar);
+								tempTimer = tempTimer + 1;
+								firstPrintInfo = false;
+							}
+							else if(currCar->turnDirection == 'F') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2);
+								errorVal = deleteNodeFromList(carListSouth, currCar);
+								tempTimer = tempTimer + 2;
+								firstPrintInfo = false;
+							}
+							else if(currCar->turnDirection == 'L') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2.5);
+								errorVal = deleteNodeFromList(carListSouth, currCar);
+								tempTimer = tempTimer + 2.5;
+								firstPrintInfo = false;
+							}
+						}
+						
+						if(errorVal == 69) {
+							listEmpty = true;
+							southEmpty = true;
+						}
+						if(tempTimer <= simulationTimer + 10) {
+							currCar = getFromFront(carListSouth);
+						}
+						else {
+							//break;
+						}
+
+						lightTimer = lightTimer + 1;
+
+					}
+					if(lightTimer > simulationTimer + 10 && lightTimer <= simulationTimer + 14) {		// YELLOW
+						
+						if(currCar->turnDirection == 'L' && (2.5 + lightTimer <= (simulationTimer + 14))) {
+							vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2.5);
+							errorVal = deleteNodeFromList(carListSouth, currCar);
+							tempTimer = tempTimer + 2.5;
+							firstPrintInfo = false;
+						}
+						tempTimer = tempTimer + 2.5;
+					}
+					
+					simulationTimer = simulationTimer + 14;
+					lightDirection++;
+
 				}
-				else if(lightDirection == 2) {		// SOUTH
-				
-				}
-				else if(lightDirection == 3) {		// WEST
+				if(lightDirection == 3) {		// WEST
+
+					listEmpty = false;
+					lightTimer = simulationTimer;
+					tempTimer = tempTimer + simulationTimer;
+					errorVal = 0;
+					if(carListWest->head == NULL) {
+							listEmpty = true;
+							westEmpty = true;
+					}
+					else {
+						currCar = getFromFront(carListWest);
+					}
+					while(lightTimer <= simulationTimer + 10 && listEmpty == false) {
+						if(currCar->arrivalTime == lightTimer) {
+							if(currCar->turnDirection == 'R') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 1);
+								errorVal = deleteNodeFromList(carListWest, currCar);
+								tempTimer = tempTimer + 1;
+								firstPrintInfo = false;
+							}
+							else if(currCar->turnDirection == 'F') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2);
+								errorVal = deleteNodeFromList(carListWest, currCar);
+								tempTimer = tempTimer + 2;
+								firstPrintInfo = false;
+							}
+							else if(currCar->turnDirection == 'L') {
+								vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2.5);
+								errorVal = deleteNodeFromList(carListWest, currCar);
+								tempTimer = tempTimer + 2.5;
+								firstPrintInfo = false;
+							}
+						}
+						
+						if(errorVal == 69) {
+							listEmpty = true;
+							westEmpty = true;
+						}
+						else if(tempTimer <= simulationTimer + 10) {
+							currCar = getFromFront(carListWest);
+						}
+						else {
+							//break;
+						}
+
+						lightTimer = lightTimer + 1;
+
+					}
+					if(lightTimer > simulationTimer + 10 && lightTimer <= simulationTimer + 14) {		// YELLOW
+						
+						if(currCar->turnDirection == 'L' && (2.5 + lightTimer <= (simulationTimer + 14))) {
+							vehicleInfoPrint(currCar, firstPrintInfo, currCar->arrivalTime + tempTimer, 2.5);
+							errorVal = deleteNodeFromList(carListWest, currCar);
+							tempTimer = tempTimer + 2.5;
+							firstPrintInfo = false;
+						}
+						tempTimer = tempTimer + 2.5;
+					}
+					
+					simulationTimer = simulationTimer + 14;
+					lightDirection++;
 
 				}
 
 				if(lightDirection == 3) {
 					lightDirection = 0;
 				}
-				//simulationTimer++;
-			}
+			
+			} // WHILE END;
 
 
 
@@ -218,19 +420,19 @@ void vehicleInfoPrint(Car* printCar, bool firstPrint, double arrivalTime, double
 			printf("Initial Vehicle Information    Intersection Arrival Time    Completed at Time\n");
 			
 			if(arrivalTime >= 10) {
-				printf("%c %c %d                         %.2f                         %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
+				printf("%c %c %d                         %.2f                        %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
 			}
 			else {
-				printf("%c %c %d                          %.2f                         %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
+				printf("%c %c %d                          %.2f                        %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
 			}
 		}
 		else {
 
 			if(arrivalTime >= 10) {
-				printf("%c %c %d                        %.2f                          %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
+				printf("%c %c %d                         %.2f                       %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
 			}
 			else {
-				printf("%c %c %d                         %.2f                          %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
+				printf("%c %c %d                          %.2f                        %.2f\n", printCar->direction, printCar->turnDirection, printCar->arrivalTime, arrivalTime, arrivalTime + addOn);
 			}
 		}
 	}

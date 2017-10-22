@@ -1,0 +1,16 @@
+Student Information
+####################
+Alexander Montague
+0959687
+amontagu@uoguelph.ca
+October 2017
+
+Program Description
+####################
+This program was created to simulate patients coming into a waiting line at a hospital through the use of a priority queue. 
+
+Additional Program  Details
+####################
+- Run the program using   ./program <file path>   Ex. If the file were to be in the assets folder, you would run ./program ../assets/<filename>
+
+- Did not attempt the starvation algorithm

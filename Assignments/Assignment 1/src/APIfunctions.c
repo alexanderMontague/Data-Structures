@@ -67,9 +67,6 @@ void insertBack(List *list, void *toBeAdded) {
 		tailNode->next = NULL;
 	}
 	else {
-		while(tempNode->next != NULL) {
-			tempNode = tempNode->next;
-		}
 		tempNode->next = tailNode;
 		tailNode->previous = tempNode;
 		list->tail = tailNode;

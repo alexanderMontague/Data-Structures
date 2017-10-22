@@ -1,0 +1,16 @@
+Student Information
+####################
+Alexander Montague
+0959687
+amontagu@uoguelph.ca
+
+Program Description
+####################
+This program was created to test the functionality of a stack implicated as a linked list. It squashes numbers.
+
+Additional Program  Details
+####################
+
+- I did not implement the API EXACTLY as wanted. I did not really understand the point of doing all the extra steps, and linking the function pointers in this case. I understand the importance for another time, where you might not have access to all the functions needed. I on the other hand did, and was on a limited time schedule, as I have midterms and other work to do. I actually understand linked lists and how they work really good from these assignments, but the way that they are implemented are sort of new to be, and I do not understand how I am to be using them correctly
+
+- Other than that, the program should still have the exact same functionality that is needed for this program, while implementing a stack and linked list.

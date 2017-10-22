@@ -38,7 +38,6 @@ int main (int argc, char **argv)
 	bool endLoop = false;
 	
 	char menuChoice[100];
-	char fileDirectory[100];
 	char tempString[100];
 	char* tempID = NULL;
 	char* tempPriorityString = NULL;
@@ -48,8 +47,7 @@ int main (int argc, char **argv)
 		printf("Usage: ./program <fileName>\n");
 		return 1;
 	}
-	strcat(fileDirectory, argv[1]);
-	filePointer = fopen(fileDirectory, "r");
+	filePointer = fopen(argv[1], "r");
 
 	if(filePointer != NULL) {
 		while(fgets(tempString, 100, filePointer) != NULL) {
@@ -107,7 +105,7 @@ int main (int argc, char **argv)
 			fgets(tempIllness, 100, stdin);
 			tempIllness[strlen(tempIllness) - 1] = '\0';
 			while(strcmp(tempIllness, "CV") != 0 || strcmp(tempIllness, "HN") != 0 || strcmp(tempIllness, "EV") != 0 || strcmp(tempIllness, "GI") != 0 || strcmp(tempIllness, "MH") != 0 || strcmp(tempIllness, "NC") != 0 || strcmp(tempIllness, "EC") != 0 || strcmp(tempIllness, "RC") != 0 || strcmp(tempIllness, "SK") != 0 || strcmp(tempIllness, "SA") != 0 || strcmp(tempIllness, "TR") != 0) {
-				printf("Invalid Symptom. Enter a new Symptom.\n");
+				printf("Invalid Symptom. Enter a new Symptom. (If valid just enter again)\n");
 				printf("Patient Symptom: ");
 				fgets(tempIllness, 100, stdin);
 				tempIllness[strlen(tempIllness) - 1] = '\0';

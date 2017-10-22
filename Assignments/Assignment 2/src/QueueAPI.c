@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "struct.h"
 #include "LinkedListAPI.h"
 #include "QueueAPI.h"
 #include "patient.h"
@@ -77,6 +76,14 @@ void timePrint(Queue* q, TimePatient** printStruct, size_t numElems) {
 		}
 		printNode = printNode->next;
 	}
+
+}
+
+void printNode2(void *data) {
+
+	Patient* printPatient = (Patient*)data;
+
+	printf("%s\t\t    %d\t\t    %s\n", printPatient->patientID, printPatient->priority, printPatient->illness);
 
 }
 

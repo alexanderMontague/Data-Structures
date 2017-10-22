@@ -227,13 +227,9 @@ void removeFront(List* list) {
 		deleteList(list);
 	}
 	else {
-		printf("in here1\n");
 		list->head->next = tempNode;
-		printf("in here2\n");
 		list->head = tempNode;
-		printf("in here3\n");
 		list->head->previous = NULL;
-		printf("in here4\n");
 		free(tempNode);
 		tempNode = NULL;
 	}

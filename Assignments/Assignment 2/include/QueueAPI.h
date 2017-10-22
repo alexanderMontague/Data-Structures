@@ -44,4 +44,6 @@ void removeNode(Queue* q, void* data);
 // Prints the queue in the order in which it was input
 void timePrint(Queue* q, TimePatient** printStruct, size_t numElems);
 
+void printNode2(void *data);
+
 #endif

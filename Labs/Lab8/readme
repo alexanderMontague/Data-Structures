@@ -1,0 +1,15 @@
+Student Information
+####################
+Alexander Montague
+0959687
+amontagu@uoguelph.ca
+
+Program Description
+####################
+This program displays the use of two sorting algorithms, bubble and selection. The program takes input from the user and then sorts their input using an algorithm sort type of their choice.
+
+Additional Program  Details
+####################
+1) Executable files are put in bin folder
+
+2) Not exactly sure how we were supposed to do options 3 and 6 if we were to only use the sort function. I have no idea how it is possible to do that by only returning 1, 0 or -1, and not changing the sorting algorithm in anyway for the other options. I have done it the least intrusive way in my opinion, and this should prove that I at least know what you guys wanted.

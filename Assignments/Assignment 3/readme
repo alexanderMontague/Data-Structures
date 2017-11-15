@@ -1,0 +1,20 @@
+Student Information
+####################
+Alexander Montague
+0959687
+amontagu@uoguelph.ca
+October 2017
+
+Program Description
+####################
+This program was created to simulate patients coming into a waiting line at a hospital through the use of a priority queue. 
+
+Additional Program  Details
+####################
+
+—PLEASE READ—
+- My program for some reason does not run on the socs virtual machine. I have absolutely no idea why and have spent the past 2 hours trying to debug with valgrind and gdb with no success. Please, if you could, can you run my program on a modern machine. I coded the program on MAC OSX, and it had absolutely no problems. When I went to switch over to the virtual machine just to check, I was met with a seg fault that I could not debug. The program is fully functional on all the other machines I have tested with, just not the socs box. I have no idea why. Please don’t fail me, my program actually works as specified just not on the virtual machine :(.
+
+- Run the program using   ./program <file path>   Ex. If the file were to be in the assets folder, you would run ./program ../assets/<filename>
+
+- Did not attempt the starvation algorithm

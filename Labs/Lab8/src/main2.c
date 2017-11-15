@@ -148,28 +148,7 @@ void sort(char* menuSelection, SortAlgorithm sorter, int* array, int length, Com
 		printArray(array, length);
 	}
 	else if(menuChoice == 3) {
-		for(int i = 0; i < length; i++) {
-			if(array[i] % 2 == 0) {
-				evenArray[even] = array[i];
-				even++;
-			}
-			else {
-				oddArray[odd] = array[i];
-				odd++;
-			}
-		}
-
-		sorter(evenArray, even, compare);
-		sorter(oddArray, odd, compare);
-
-		for(int j = 0; j < length; j++) {
-			array[j] = evenArray[j];
-			if(j >= even) {
-				array[j] = oddArray[j - even];
-			}
-		}
-		printf("Result Array: ");
-		printArray(array, length);
+		
 	}
 	else if(menuChoice == 4) {
 		sorter(array, length, compare);
@@ -182,28 +161,7 @@ void sort(char* menuSelection, SortAlgorithm sorter, int* array, int length, Com
 		printArray(array, length);
 	}
 	else if(menuChoice == 6) {
-		for(int i = 0; i < length; i++) {
-			if(array[i] % 2 == 0) {
-				evenArray[even] = array[i];
-				even++;
-			}
-			else {
-				oddArray[odd] = array[i];
-				odd++;
-			}
-		}
-
-		sorter(evenArray, even, compare);
-		sorter(oddArray, odd, compare);
-
-		for(int j = 0; j < length; j++) {
-			array[j] = evenArray[j];
-			if(j >= even) {
-				array[j] = oddArray[j - even];
-			}
-		}
-		printf("Result Array: ");
-		printArray(array, length);
+				
 	}
 	else {
 		printf("Invalid Selection!\n");

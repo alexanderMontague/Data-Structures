@@ -6,10 +6,10 @@ SRC = ./src/
 LIB = ./lib/
 
 program:
-	$(CC) $(CFLAGS) $(SRC)main.c $(SRC)hash.c $(SRC)HashTableAPI.c -Iinclude -Ilib -o $(BIN)program
+	$(CC) $(CFLAGS) $(SRC)main.c $(SRC)hash.c $(SRC)HashTableAPI.c -w -Iinclude -Ilib -o $(BIN)program
 
 testProgram:
-	$(CC) $(CFLAGS) $(SRC)testMain.c $(SRC)hash.c $(SRC)HashTableAPI.c -Iinclude -Ilib -o $(BIN)program
+	$(CC) $(CFLAGS) $(SRC)testMain.c $(SRC)hash.c $(SRC)HashTableAPI.c -w -Iinclude -Ilib -o $(BIN)program
 
 cls:
 	clear

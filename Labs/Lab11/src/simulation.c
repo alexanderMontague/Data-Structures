@@ -65,6 +65,6 @@ void runSimulation()
 		}
 	}
 
-	Free the heap memory.
+	//Free the heap memory.
 	deleteHeap(heap);
 }

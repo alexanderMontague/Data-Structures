@@ -71,8 +71,8 @@ void deleteHeap(Heap *heap){
         deleteRoot(heap);
         i--;
     }
-    //free(heap->heapArray);
-    //free(heap);
+    free(heap->heapArray);
+    free(heap);
 }
 
 void* getRoot(Heap *heap){

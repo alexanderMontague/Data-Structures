@@ -35,7 +35,7 @@ void setVideoName(Video* v, char* name)
 {
 	if( v->name )
 	{
-	 	//free(v->name);	
+	 	free(v->name);	
 	}
 	if(name != NULL)
 	{ 
@@ -59,7 +59,7 @@ void deleteVideo( void* data)
 	if( data )
 	{
 		Video* v = (Video*)data;
-		//free(v);
+		free(v);
 		v = NULL;
 	}
 }

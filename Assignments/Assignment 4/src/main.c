@@ -65,7 +65,19 @@ int main (int argc, char **argv)
 		}
 		fclose(filePointer);	
 
+		printf("In Order:\n");
+		printInOrder(binSearchTree, binSearchTree->printFunc);
+		printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+
+		printf("Pre Order:\n");
+		printPreOrder(binSearchTree, binSearchTree->printFunc);
+		printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+
+		printf("Post Order:\n");
 		printPostOrder(binSearchTree, binSearchTree->printFunc);
+		printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+
+		printf("Max Height = %d\n", getHeight(binSearchTree->root));
 
 	}
 	else {

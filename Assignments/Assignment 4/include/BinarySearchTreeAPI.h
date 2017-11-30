@@ -132,7 +132,6 @@ void printPostOrder(Tree * theTree, PrintFunc printData);
  */
 int isTreeEmpty(Tree* theTee);
 
-
 /**
  * Helper function for checking if a single node is a leaf (no children)
  * @param  treeNode [description]
@@ -159,6 +158,12 @@ int getHeight( TreeNode* treeNode );
  * You may add additional API functions below this comment if you want to extend the funcitonality.
  */
 
+void inOrder(TreeNode* printNode, PrintFunc printData);
+
+void preOrder(TreeNode* printNode, PrintFunc printData);
+
 void postOrder(TreeNode* printNode, PrintFunc printData);
+
+TreeDataPtr inTree(Tree* theTree, TreeNode* findNode, TreeDataPtr data);
 
 #endif

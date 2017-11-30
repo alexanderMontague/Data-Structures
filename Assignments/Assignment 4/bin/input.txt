@@ -8,5 +8,9 @@ Sports
 The local team played again
 Test
 I love testing my programs!
-Test
-asdfasdfasf
+Bike
+Bikes are fun to Ride
+Apple
+This is a fruit or a company
+Candy
+Everybody has a sweet tooth

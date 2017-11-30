@@ -22,7 +22,7 @@ int main( int argc, char ** argv)
 	// Print and destroy the heap. The heap will adjust after each delete to maintain the heap property. 
 	printf("\nPrint and destory\n");
 	int index = 0;
-	int  data[] = {4,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+	int  data[] = {4,6,7,8,9,10, 11,12,13,14,15,16,17,18,19};
 	while( currentSize(heap) > 0 )
 	{
 		printData( getRoot(heap) );

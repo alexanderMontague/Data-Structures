@@ -1,0 +1,19 @@
+This project provides a basic menu system to add and watch videos.
+
+The project is developed to introduce students to heap data structures.
+
+/* 
+   This code is provided as part of lab 11 project.
+   It may not be reused for any personal assignment submissions 
+*/
+
+NOTE - I understand heaps and a min heap, but was I supposed to also correct the order of the nodes on the same tree level?
+
+After sorting with my function when adding a node my tree looks like this:
+					
+				Batman Begins
+			     	
+		   Batman Ends		      Batman Continues
+	Wonder Women	     Spider Man		
+
+The levels of the heap will still always be from least to greatest by string, but the order in levels are not. The executable given did not have proper output for me to check my output.

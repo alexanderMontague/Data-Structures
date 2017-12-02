@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "BinarySearchTreeAPI.h"
+#include "rule.h"
 
 #ifndef TREE_API
 #define TREE_API
@@ -19,14 +20,13 @@ TreeNode* createTreeNode(TreeDataPtr data) {
 	return createNode;
 }
 
-Tree * createBinTree(CompareFunc compare, DeleteFunc del, PrintFunc print) {
+Tree * createBinTree(CompareFunc compare, DeleteFunc del) {
 	
 	Tree* newTree = NULL;
 	newTree = malloc(sizeof(Tree));
 	newTree->root = NULL;
 	newTree->compareFunc = compare;
 	newTree->deleteFunc = del;
-	newTree->printFunc = print;
 
 	return newTree;
 }
@@ -76,23 +76,37 @@ void addToTree(Tree * theTree, TreeDataPtr data) {
 }
 
 void removeFromTree(Tree * theTree, TreeDataPtr data) {
-
+	if(findInTree(theTree, data) == NULL) {
+		printf("The Rule could not be Found!\n");
+	}
+	else {
+		theTree->root = removeNode(theTree, theTree->root, data);
+	}
 }
 
-TreeDataPtr findInTree( Tree* theTree, TreeDataPtr data ) {
+TreeDataPtr findInTree(Tree* theTree, TreeDataPtr data) {
 	
-	return inTree(theTree, theTree->root, data);
+	TreeNode* returnNode = NULL;
 
+	returnNode = inTree(theTree, theTree->root, data);
+
+	if(returnNode == NULL) {
+		return NULL;
+	}
+	return returnNode->data;
 }
 
 TreeDataPtr getRootData(Tree * theTree) {
 	return NULL;
 }
 
-void printInOrder(Tree * theTree, PrintFunc printData) {
-
-	inOrder(theTree->root, printData);
-
+void printInOrder(Tree * theTree, PrintFunc printData) {	// Print functions referenced from http://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
+	if(theTree->root == NULL) {
+		printf("The Tree is Empty!\n");
+	}
+	else {
+		inOrder(theTree->root, printData);
+	}
 }
 
 void printPreOrder(Tree * theTree, PrintFunc printData) {
@@ -134,7 +148,7 @@ int hasTwoChildren( TreeNode *treeNode) {
 	return 0;
 }
 
-int getHeight(TreeNode* treeNode) {
+int getHeight(TreeNode* treeNode) {		// Referenced from Prof Ian's Slides
 	
 	int left = 0;
 	int right = 0;
@@ -148,14 +162,14 @@ int getHeight(TreeNode* treeNode) {
 		right = getHeight(treeNode->right);
 		if(left >= right) {
 			maxHeight = left;
-			return maxHeight + 1;
+			maxHeight++;
 		}
 		else if(right >= left) {
 			maxHeight = right;
-			return maxHeight + 1;
+			maxHeight++;
 		}
+		return maxHeight;
 	}
-
 
 	return 0;
 }
@@ -202,19 +216,73 @@ void postOrder(TreeNode* printNode, PrintFunc printData) {
 
 }
 
-TreeDataPtr inTree(Tree* theTree, TreeNode* findNode, TreeDataPtr data) {
-
-	if(theTree->compareFunc(findNode->data, data) == 0) {
-		return data;
-	}
-	else if(findNode == NULL) {
+TreeNode* inTree(Tree* theTree, TreeNode* searchNode, TreeDataPtr data) {
+	if(searchNode == NULL) {
 		return NULL;
 	}
-	else {
-		inTree(theTree, findNode->left, data);
-		inTree(theTree, findNode->right, data);
+	else if(theTree->compareFunc(data, searchNode->data) == 0) {
+		return searchNode;
 	}
-	return NULL;	// dummy return to silence warning
+	else if(theTree->compareFunc(data, searchNode->data) < 0) {
+		return inTree(theTree, searchNode->left, data);
+	}
+	else if(theTree->compareFunc(data, searchNode->data) > 0) {
+		return inTree(theTree, searchNode->right, data);
+	}
+	return searchNode; // dummy return to silence warning
+}
+
+TreeNode* removeNode(Tree* theTree, TreeNode* searchNode, TreeDataPtr data) {
+
+	if(searchNode == NULL) {
+		return NULL;
+	}
+	if(theTree->compareFunc(data, searchNode->data) == 0) {
+		if(isLeaf(searchNode) == 1) {			// delete case if node is a leaf
+			if(theTree->root == searchNode) {
+				theTree->root = NULL;
+				printf("in here\n");
+			}
+			free(searchNode);
+			searchNode = NULL;
+			printf("Successfully Deleted the Node1\n");
+		}
+		else if(searchNode->right == NULL) {	// delete case if 1 child and on left
+			TreeNode* nextNode = searchNode->left;
+			free(searchNode);
+			searchNode = NULL;
+			printf("Successfully Deleted the Node2\n");
+			return nextNode;
+		}
+		else if(searchNode->left == NULL) {	// delete case if 1 child and on right
+			TreeNode* nextNode = searchNode->right;
+			free(searchNode);
+			searchNode = NULL;
+			printf("Successfully Deleted the Node2\n");
+			return nextNode;
+		}
+		else if(searchNode->left != NULL && searchNode->right != NULL) {	// delete case if node has 2 children
+			TreeNode* maxNode = findMax(searchNode->left);
+			searchNode->data = maxNode->data;
+			searchNode->left = removeNode(theTree, searchNode->left, maxNode->data);
+			printf("Successfully Deleted the Node3\n");
+		}
+		return searchNode;
+	}
+	else if(theTree->compareFunc(data, searchNode->data) < 0) {			// iterate left side of tree
+		searchNode->left = removeNode(theTree, searchNode->left, data);
+	}		
+	else if(theTree->compareFunc(data, searchNode->data) > 0) {			// iterate right side of tree
+		searchNode->right = removeNode(theTree, searchNode->right, data);
+	}
+	return searchNode;
+}
+
+TreeNode* findMax(TreeNode* searchNode) {	// Finds Max Node in a tree
+	while(searchNode->right != NULL) {
+		searchNode = searchNode->right;
+	}
+	return searchNode;
 }
 
 #endif

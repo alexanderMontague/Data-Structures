@@ -44,7 +44,6 @@ typedef struct binTree
 	TreeNode *root;
 	CompareFunc compareFunc;
 	DeleteFunc deleteFunc;
-	PrintFunc printFunc;
 
 	// Additions must work with abstract data types.
 	// Additional function pointers to generalize tree.
@@ -65,7 +64,7 @@ TreeNode* createTreeNode(TreeDataPtr data);
  * @param  del     [Function pointer to delete data from node]
  * @return Newly created Tree
  */
-Tree * createBinTree(CompareFunc compare, DeleteFunc del, PrintFunc print);
+Tree * createBinTree(CompareFunc compare, DeleteFunc del);
 
 /**
  * destroyBinTree - remove all items and free memory
@@ -164,6 +163,10 @@ void preOrder(TreeNode* printNode, PrintFunc printData);
 
 void postOrder(TreeNode* printNode, PrintFunc printData);
 
-TreeDataPtr inTree(Tree* theTree, TreeNode* findNode, TreeDataPtr data);
+TreeNode* inTree(Tree* theTree, TreeNode* findNode, TreeDataPtr data);
+
+TreeNode* removeNode(Tree* theTree, TreeNode* node, TreeDataPtr data);
+
+TreeNode* findMax(TreeNode* searchNode);
 
 #endif

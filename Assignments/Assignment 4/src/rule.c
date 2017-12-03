@@ -18,6 +18,6 @@ void deleteF(void* data) {
 void printF(void* data) {
 
 	Rule* printRule = (Rule*)data;
-	printf("%s\tRating: %.2f\tSystem: %.2f\tOccurences: %d\n", printRule->keyWord, printRule->userRating, printRule->systemRating, printRule->totalCount);
+	printf("%s\t\tRating: %.2f\t\tSystem: %.2f\t\tOccurences: %d\n", printRule->keyWord, printRule->userRating, printRule->systemRating, printRule->totalCount);
 
 }

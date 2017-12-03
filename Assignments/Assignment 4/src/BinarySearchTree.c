@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include "BinarySearchTreeAPI.h"
-#include "rule.h"
 
 #ifndef TREE_API
 #define TREE_API
@@ -32,7 +31,12 @@ Tree * createBinTree(CompareFunc compare, DeleteFunc del) {
 }
 
 void destroyBinTree(Tree * toDestroy) {
-
+	
+	while(toDestroy->root != NULL) {
+		toDestroy->root = removeNode(toDestroy, toDestroy->root, toDestroy->root->data);
+	}
+	free(toDestroy);
+	toDestroy = NULL;
 }
 
 void addToTree(Tree * theTree, TreeDataPtr data) {
@@ -241,31 +245,29 @@ TreeNode* removeNode(Tree* theTree, TreeNode* searchNode, TreeDataPtr data) {
 		if(isLeaf(searchNode) == 1) {			// delete case if node is a leaf
 			if(theTree->root == searchNode) {
 				theTree->root = NULL;
-				printf("in here\n");
 			}
 			free(searchNode);
 			searchNode = NULL;
-			printf("Successfully Deleted the Node1\n");
+			printf("Successfully Deleted the Node\n");
 		}
 		else if(searchNode->right == NULL) {	// delete case if 1 child and on left
 			TreeNode* nextNode = searchNode->left;
 			free(searchNode);
 			searchNode = NULL;
-			printf("Successfully Deleted the Node2\n");
+			printf("Successfully Deleted the Node\n");
 			return nextNode;
 		}
 		else if(searchNode->left == NULL) {	// delete case if 1 child and on right
 			TreeNode* nextNode = searchNode->right;
 			free(searchNode);
 			searchNode = NULL;
-			printf("Successfully Deleted the Node2\n");
+			printf("Successfully Deleted the Node\n");
 			return nextNode;
 		}
 		else if(searchNode->left != NULL && searchNode->right != NULL) {	// delete case if node has 2 children
 			TreeNode* maxNode = findMax(searchNode->left);
 			searchNode->data = maxNode->data;
 			searchNode->left = removeNode(theTree, searchNode->left, maxNode->data);
-			printf("Successfully Deleted the Node3\n");
 		}
 		return searchNode;
 	}
@@ -286,5 +288,3 @@ TreeNode* findMax(TreeNode* searchNode) {	// Finds Max Node in a tree
 }
 
 #endif
-
-

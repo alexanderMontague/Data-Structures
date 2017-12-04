@@ -22,6 +22,8 @@ void printHash(HTable* hashTable);
 
 void delWord(HTable* hashTable);
 
+char* allocatedPointer(char* oldString);
+
 int main (int argc, char **argv)
 {
 
@@ -71,7 +73,8 @@ int main (int argc, char **argv)
 	if(filePointer != NULL) {
 		while(fgets(tempWord, sizeof(tempWord), filePointer) != NULL) {
 			tempWord[strlen(tempWord) - 1] = '\0';
-			tempString = strdup(tempWord);
+			tempString = allocatedPointer(tempWord);
+			//tempString = strdup(tempWord);
 			for(int i = 0; i < strlen(tempString); i++) {
 				tempString[i] = tolower(tempString[i]);
 			}
@@ -136,7 +139,8 @@ int main (int argc, char **argv)
 		char tempWord[100] = "NULL";
 		while(fgets(tempWord, 100, filePointer2) != NULL) {
 			tempWord[strlen(tempWord) - 1] = '\0';
-			tempString = strdup(tempWord);
+			tempString = allocatedPointer(tempWord);
+			//tempString = strdup(tempWord);
 			for(int i = 0; i < strlen(tempString); i++) {
 				tempString[i] = tolower(tempString[i]);
 			}
@@ -208,7 +212,8 @@ void addWord(HTable* hashTable) {
 	printf("Word: ");
 	fgets(tempWord, 100, stdin);
 	tempWord[strlen(tempWord) - 1] = '\0';
-	char* tempString = strdup(tempWord);
+	char* tempString = allocatedPointer(tempWord);
+	//char* tempString = strdup(tempWord);
 	for(int i = 0; i < strlen(tempString); i++) {
 		tempString[i] = tolower(tempString[i]);
 	}
@@ -228,7 +233,8 @@ void delWord(HTable* hashTable) {
 	printf("Word: ");
 	fgets(tempWord, 100, stdin);
 	tempWord[strlen(tempWord) - 1] = '\0';
-	char* tempString = strdup(tempWord);
+	char* tempString = allocatedPointer(tempWord);
+	//char* tempString = strdup(tempWord);
 	for(int i = 0; i < strlen(tempString); i++) {
 		tempString[i] = tolower(tempString[i]);
 	}
@@ -241,4 +247,11 @@ void delWord(HTable* hashTable) {
 	else {
 		printf("This word is not in the Dictionary!\n");
 	}
+}
+
+char* allocatedPointer(char* oldString) {
+	char* newPointer = NULL;
+	newPointer = malloc((strlen(oldString) + 1) * sizeof(char));
+	strncpy(newPointer, oldString, strlen(oldString) + 1);
+	return newPointer;
 }

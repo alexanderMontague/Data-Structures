@@ -13,6 +13,7 @@
 #include "BinarySearchTreeAPI.h"
 #include "rule.h"
 
+char* allocatedPointer(char* oldString);
 
 int main (int argc, char **argv)
 {
@@ -62,7 +63,8 @@ int main (int argc, char **argv)
 				for(int i = 0; i < strlen(tempWord); i++) {
 					tempWord[i] = tolower(tempWord[i]);
 				}
-				tempString = strdup(tempWord);
+				tempString = allocatedPointer(tempWord);
+				//tempString = strdup(tempWord);
 				tempRule->keyWord = tempString;
 				tempRule->userRating = 0.5;
 				tempRule->systemRating = 0.5;
@@ -74,7 +76,8 @@ int main (int argc, char **argv)
 				for(int i = 0; i < strlen(tempWord); i++) {
 					tempWord[i] = tolower(tempWord[i]);
 				}
-				tempString = strdup(tempWord);
+				tempString = allocatedPointer(tempWord);
+				//tempString = strdup(tempWord);
 				tempRule->keySentence = tempString;
 				addToTree(binSearchTree, tempRule);
 				line = line - 2;
@@ -104,7 +107,8 @@ int main (int argc, char **argv)
 				for(int i = 0; i < strlen(tempAdd); i++) {
 					tempAdd[i] = tolower(tempAdd[i]);
 				}				
-				tempRule->keyWord = strdup(tempAdd);
+				//tempRule->keyWord = strdup(tempAdd);
+				tempRule->keyWord = allocatedPointer(tempAdd);
 
 				printf("Enter the Rule Sentence: ");
 				fgets(tempAdd, 100, stdin);
@@ -113,7 +117,8 @@ int main (int argc, char **argv)
 					fgets(tempAdd, 100, stdin);
 				}
 				tempAdd[strlen(tempAdd) - 1] = '\0';
-				tempRule->keySentence = strdup(tempAdd);
+				//tempRule->keySentence = strdup(tempAdd);
+				tempRule->keySentence = allocatedPointer(tempAdd);
 
 				printf("Enter the Rule Rating: ");
 				fgets(tempAdd, 100, stdin);
@@ -127,7 +132,13 @@ int main (int argc, char **argv)
 				tempRule->userRating = atof(tempAdd);
 				tempRule->systemRating = atof(tempAdd);
 
-				addToTree(binSearchTree, tempRule);
+				if(findInTree(binSearchTree, tempRule) == NULL) {
+					addToTree(binSearchTree, tempRule);
+					printf("Successfully Added Node!\n");
+				}
+				else {
+					printf("This rule is already in the system!\n");
+				}
 			}
 			else if(strcmp(menuInput, "2\n") == 0) {
 				tempRule = malloc(sizeof(Rule));		// Creating a dummy struct to just hold keyWord to search
@@ -137,7 +148,8 @@ int main (int argc, char **argv)
 					tempAdd[i] = tolower(tempAdd[i]);
 				}
 				tempAdd[strlen(tempAdd) - 1] = '\0';
-				tempRule->keyWord = strdup(tempAdd);	
+				//tempRule->keyWord = strdup(tempAdd);	
+				tempRule->keyWord = allocatedPointer(tempAdd);
 				removeFromTree(binSearchTree, tempRule);
 			}
 			else if(strcmp(menuInput, "3\n") == 0) {
@@ -152,7 +164,8 @@ int main (int argc, char **argv)
 					tempAdd[i] = tolower(tempAdd[i]);
 				}
 				tempAdd[strlen(tempAdd) - 1] = '\0';
-				tempRule->keyWord = strdup(tempAdd);	
+				//tempRule->keyWord = strdup(tempAdd);
+				tempRule->keyWord = allocatedPointer(tempAdd);	
 				editRule = findInTree(binSearchTree, tempRule);
 				if(editRule == NULL) {
 					printf("The Rule could not be Found!\n");
@@ -272,5 +285,12 @@ int main (int argc, char **argv)
 	}
 
     return 0;
+}
+
+char* allocatedPointer(char* oldString) {
+	char* newPointer = NULL;
+	newPointer = malloc((strlen(oldString) + 1) * sizeof(char));
+	strncpy(newPointer, oldString, strlen(oldString) + 1);
+	return newPointer;
 }
 

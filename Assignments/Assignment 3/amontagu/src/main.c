@@ -14,6 +14,7 @@
 #include "hash.h"
 #include "HashTableAPI.h"
 
+char* allocatedPointer(char* oldString);
 
 int main (int argc, char **argv)
 {
@@ -52,7 +53,8 @@ int main (int argc, char **argv)
 	if(filePointer != NULL) {
 		while(fgets(tempWord, sizeof(tempWord), filePointer) != NULL) {
 			tempWord[strlen(tempWord) - 1] = '\0';
-			tempString = strdup(tempWord);
+			tempString = allocatedPointer(tempWord);
+			//tempString = strdup(tempWord);
 			for(int i = 0; i < strlen(tempString); i++) {
 				tempString[i] = tolower(tempString[i]);
 			}
@@ -81,7 +83,8 @@ int main (int argc, char **argv)
 			printf("Word: ");
 			fgets(tempWord, 100, stdin);
 			tempWord[strlen(tempWord) - 1] = '\0';
-			tempString = strdup(tempWord);
+			tempString = allocatedPointer(tempWord);
+			//tempString = strdup(tempWord);
 			for(int i = 0; i < strlen(tempString); i++) {
 				tempString[i] = tolower(tempString[i]);
 			}
@@ -99,7 +102,8 @@ int main (int argc, char **argv)
 			printf("Word: ");
 			fgets(tempWord, 100, stdin);
 			tempWord[strlen(tempWord) - 1] = '\0';
-			tempString = strdup(tempWord);
+			tempString = allocatedPointer(tempWord);
+			//tempString = strdup(tempWord);
 			for(int i = 0; i < strlen(tempString); i++) {
 				tempString[i] = tolower(tempString[i]);
 			}
@@ -114,6 +118,8 @@ int main (int argc, char **argv)
 			}
 		}
 		else if(strcmp(menuInput, "3\n") == 0) {
+			incorrectWords = 0;
+			correctWords = 0;
 			printf("Enter a filename to be spell checked!\n");
 			printf("File Name: ");
 			fgets(fileName, 100, stdin);
@@ -127,7 +133,8 @@ int main (int argc, char **argv)
 				char tempWord[100] = "NULL";
 				while(fgets(tempWord, 100, filePointer2) != NULL) {
 					tempWord[strlen(tempWord) - 1] = '\0';
-					tempString = strdup(tempWord);
+					tempString = allocatedPointer(tempWord);
+					//tempString = strdup(tempWord);
 					for(int i = 0; i < strlen(tempString); i++) {
 						tempString[i] = tolower(tempString[i]);
 					}
@@ -171,5 +178,12 @@ int main (int argc, char **argv)
 	while(menuLoop == true);
 
     return 0;
+}
+
+char* allocatedPointer(char* oldString) {
+	char* newPointer = NULL;
+	newPointer = malloc((strlen(oldString) + 1) * sizeof(char));
+	strncpy(newPointer, oldString, strlen(oldString) + 1);
+	return newPointer;
 }
 

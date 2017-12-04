@@ -9,7 +9,7 @@ program:
 	$(CC) $(CFLAGS) $(SRC)main.c $(SRC)hash.c $(SRC)HashTableAPI.c -w -Iinclude -Ilib -o $(BIN)program
 
 testProgram:
-	$(CC) $(CFLAGS) $(SRC)testMain.c $(SRC)hash.c $(SRC)HashTableAPI.c -w -Iinclude -Ilib -o $(BIN)program
+	$(CC) $(CFLAGS) $(SRC)testMain.c $(SRC)hash.c $(SRC)HashTableAPI.c -w -Iinclude -Ilib -o $(BIN)testProgram
 
 cls:
 	clear
